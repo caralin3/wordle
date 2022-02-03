@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Title } from 'react-native-paper';
-import { Board, Button } from '../components';
+import { StyleSheet, Text, View } from 'react-native';
+import { Board, Button, IconButton, Keyboard, Row } from '../components';
 
 /**
  * @TODO:
@@ -15,18 +14,31 @@ import { Board, Button } from '../components';
 export const HomeScreen: React.FC = () => {
   return (
     <View style={styles.container}>
-      <Title>Wordle</Title>
+      <Text style={styles.title}>Wordle</Text>
       <Board />
-      <Button title='submit' disabled />
+      <Row style={styles.actions} justify='space-between' guttersHorizontal='lg'>
+        <IconButton iconName='cog' />
+        <Button title='submit' />
+        <IconButton iconName='home' />
+      </Row>
+      <Keyboard />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
+    backgroundColor: '#fff',
+    flex: 1,
     justifyContent: 'center',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    paddingVertical: 10,
+  },
+  actions: {
+    width: '100%',
   },
 });

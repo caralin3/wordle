@@ -1,37 +1,33 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Col, LetterCard, Row } from './';
+import { Cell, WordleBoard } from '../types';
+import { MAX_ATTEMPTS } from '../utils';
+import { Col, Row } from './Grid';
+import { LetterCard } from './LetterCard';
 
 export interface BoardRowProps {
+  letters?: Cell[];
   size?: number;
-  word?: string;
 }
 
-export const BoardRow: React.FC<BoardRowProps> = ({ size = 5, word }) => {
-  if (!word) {
-    const cols = [];
-    for (let i = 0; i < size; i++) {
-      cols.push(i);
+export const BoardRow: React.FC<BoardRowProps> = ({ letters, size = 5 }) => {
+  const cells: Cell[] = [];
+  for (let i = 0; i < size; i++) {
+    if (!!letters && !!letters[i]) {
+      cells.push(letters[i]);
+    } else {
+      cells.push({
+        letter: '',
+        status: 'unset',
+      });
     }
-    return (
-      <Row>
-        {cols.map((col, index) => (
-          <Col gutters='sm' key={index}>
-            <LetterCard letter='' />
-          </Col>
-        ))}
-      </Row>
-    );
   }
-  const letters = [];
-  for (let i = 0; i < word.length; i++) {
-    letters.push(word[i]);
-  }
+
   return (
     <Row>
-      {letters.map((letter, index) => (
+      {cells.map((cell, index) => (
         <Col gutters='sm' key={index}>
-          <LetterCard letter={letter} />
+          <LetterCard letter={cell.letter} status={cell.status} />
         </Col>
       ))}
     </Row>
@@ -39,41 +35,31 @@ export const BoardRow: React.FC<BoardRowProps> = ({ size = 5, word }) => {
 };
 
 export interface BoardProps {
-  maxAttempts?: number;
+  board: WordleBoard;
   size?: number;
-  words?: string[];
 }
 
-export const Board: React.FC<BoardProps> = ({ maxAttempts = 6, size, words }) => {
-  if (!!words && words.length > 0) {
-    const rows = [];
-    for (let i = 0; i < maxAttempts - words.length; i++) {
-      rows.push(i);
-    }
-    return (
-      <View style={styles.container}>
-        {words.map((word, index) => (
-          <BoardRow size={size} word={word} key={index} />
-        ))}
-        {rows.length > 0 && rows.map((row, index) => <BoardRow size={size} key={index} />)}
-      </View>
-    );
-  }
+export const Board: React.FC<BoardProps> = ({ board, size }) => {
   const rows = [];
-  for (let i = 0; i < maxAttempts; i++) {
+  for (let i = 0; i < MAX_ATTEMPTS - Object.keys(board).length; i++) {
     rows.push(i);
   }
+
   return (
     <View style={styles.container}>
-      {rows.map((row, index) => (
-        <BoardRow size={size} key={index} />
+      {Object.keys(board).map((key) => (
+        <BoardRow size={size} letters={board[key]} key={key} />
       ))}
+      {rows.length > 0 && rows.map((row, index) => <BoardRow size={size} key={index} />)}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 20,
+    width: '100%',
   },
 });
