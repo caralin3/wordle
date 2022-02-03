@@ -1,18 +1,25 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { HomeScreen } from './src/screens';
 
 export default function App() {
+  const theme = {
+    ...DefaultTheme,
+    roundness: 10,
+    colors: {
+      ...DefaultTheme.colors,
+      accent: '#f2c511',
+      background: '#fff',
+      disabled: '#312b3b',
+      error: '#bebbc4',
+      primary: '#0e8f33',
+      placeholder: '#72b9e8',
+    },
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
+    <PaperProvider theme={theme}>
+      <HomeScreen />
+    </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
