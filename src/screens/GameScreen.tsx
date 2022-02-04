@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert, StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Board, Button, IconButton, Keyboard, Row } from '../components';
+import { Board, Button, IconButton, Keyboard, Row, Toast } from '../components';
 import { RootState } from '../store';
 import * as gameState from '../store/game';
 import { isValidWord, wordle } from '../utils';
@@ -9,8 +9,6 @@ import { isValidWord, wordle } from '../utils';
 /**
  * @TODO:
  * Helper modal
- * wire wordle logic
- * update keyboard
  *
  */
 
@@ -18,33 +16,33 @@ export const GameScreen: React.FC = () => {
   const dispatch = useDispatch();
 
   const board = useSelector((state: RootState) => state.game.board);
+  const keyboard = useSelector((state: RootState) => state.game.keyboard);
   const currentAttempt = useSelector((state: RootState) => state.game.currentAttempt);
   const currentGuess = useSelector((state: RootState) => state.game.currentGuess);
   const wordLength = useSelector((state: RootState) => state.settings.wordLength);
 
-  // React.useEffect(() => {
-  //   dispatch(gameState.resetBoard());
-  // }, []);
+  const [visible, setVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    dispatch(gameState.resetBoard());
+  }, []);
 
   const answer = 'rusty';
 
   const handleSubmit = () => {
-    // if (isValidWord(currentGuess)) {
-    const result = wordle(currentGuess, answer);
-    // console.log('result', currentGuess.toLowerCase(), result);
-    dispatch(gameState.submitAttempt({ attempt: currentAttempt, result }));
-    dispatch(gameState.incrementAttempt());
-    const correct = result.filter((letter) => letter.status === 'success');
-    if (correct.length === wordLength) {
-      Alert.alert('Sucess');
-      // dispatch(gameState.resetBoard());
+    if (isValidWord(currentGuess)) {
+      const result = wordle(currentGuess, answer);
+      dispatch(gameState.submitAttempt({ attempt: currentAttempt, result }));
+      dispatch(gameState.incrementAttempt());
+      const correct = result.filter((letter) => letter.status === 'success');
+      if (correct.length === wordLength) {
+        Alert.alert('Sucess');
+        // dispatch(gameState.resetBoard());
+      }
+      dispatch(gameState.resetCurrentGuess());
+    } else {
+      setVisible(true);
     }
-    dispatch(gameState.resetCurrentGuess());
-
-    // } else {
-    //   // Show error message
-    //   console.error('Word not found.');
-    // }
   };
 
   return (
@@ -57,10 +55,12 @@ export const GameScreen: React.FC = () => {
         <IconButton iconName='home' />
       </Row>
       <Keyboard
+        keyboard={keyboard}
         disabled={currentGuess.length === wordLength}
         onBackspace={() => dispatch(gameState.removeLetter())}
         onPress={(letter) => dispatch(gameState.addLetter(letter))}
       />
+      <Toast visible={visible} onDismiss={() => setVisible(false)} message='Word not found.' />
     </View>
   );
 };

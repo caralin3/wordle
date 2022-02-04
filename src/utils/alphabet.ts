@@ -1,5 +1,34 @@
-export const alphabetRow1 = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'];
+import { WordleKeyboard } from '../types';
 
-export const alphabetRow2 = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'];
+export const pick = (obj, ...args) => ({
+  ...args.reduce((res, key) => ({ ...res, [key]: obj[key] }), {}),
+});
 
-export const alphabetRow3 = ['Z', 'X', 'C', 'V', 'B', 'N', 'M'];
+export const alphabet: WordleKeyboard = {
+  q: 'available',
+  w: 'available',
+  e: 'available',
+  r: 'available',
+  t: 'available',
+  y: 'available',
+  u: 'available',
+  i: 'available',
+  o: 'available',
+  p: 'available',
+  a: 'available',
+  s: 'available',
+  d: 'available',
+  f: 'available',
+  g: 'available',
+  h: 'available',
+  j: 'available',
+  k: 'available',
+  l: 'available',
+  z: 'available',
+  x: 'available',
+  c: 'available',
+  v: 'available',
+  b: 'available',
+  n: 'available',
+  m: 'available',
+};

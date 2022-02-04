@@ -6,3 +6,4 @@ export * from './IconButton';
 export * from './Keyboard';
 export * from './LetterButton';
 export * from './LetterCard';
+export * from './Toast';

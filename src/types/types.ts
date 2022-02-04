@@ -10,3 +10,7 @@ export interface Cell {
 export interface WordleBoard {
   [key: number]: Cell[];
 }
+
+export interface WordleKeyboard {
+  [key: string]: LetterStatus;
+}

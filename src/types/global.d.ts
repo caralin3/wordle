@@ -19,6 +19,7 @@ declare global {
         background: string;
         text: string;
       };
+      white: string;
       wrong: {
         background: string;
         text: string;

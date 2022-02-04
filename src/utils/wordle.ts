@@ -1,11 +1,10 @@
+import { words } from './words';
 import { Cell } from '../types';
 
 export const MAX_ATTEMPTS = 6;
 
-const acceptedWords = ['weave', 'words', 'leave', 'start', 'stats', 'testy'];
-
 export function isValidWord(word: string) {
-  return acceptedWords.indexOf(word) !== -1;
+  return word in words;
 }
 
 function createIndexDictionary(word: string, answer: string) {
@@ -42,6 +41,7 @@ function setLetterStates(guess, answer) {
     }
   }
 
+  // @TODO: Fix
   // update wrong spot
   for (let j = 0; j < result.length; j++) {
     const item = result[j];

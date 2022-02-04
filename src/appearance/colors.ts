@@ -1,11 +1,11 @@
 export const customColors = {
   available: {
-    background: '#393b3a',
+    background: '#6b6e6c',
     text: '#fff',
   },
   failure: {
-    background: '#413754',
-    text: '#bebbc4',
+    background: '#393b3a',
+    text: '#fff',
   },
   success: {
     background: '#0e8f33',
