@@ -51,6 +51,7 @@ export const LetterButton: React.FC<LetterButtonProps> = ({
         style={[styles.container, { borderRadius: roundness }]}
         underlayColor={ColorStatusTheme[status].backgroundColor}
       >
+        {/* @TODO: Update text to import { Text } from './Text'; */}
         <Text style={[styles.content, commonStyles, ColorStatusTheme[status]]}>{title}</Text>
       </TouchableHighlight>
     </Animated.View>

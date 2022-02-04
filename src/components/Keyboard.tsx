@@ -61,7 +61,7 @@ export const Keyboard: React.FC<KeyboardProps> = ({ disabled, keyboard, onBacksp
         <Col gutters='xxs'>
           <IconButton
             iconName='backspace-outline'
-            color={colors.error}
+            backgroundColor={colors.red}
             size={30}
             height={45}
             width={65}

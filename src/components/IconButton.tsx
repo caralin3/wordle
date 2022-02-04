@@ -1,18 +1,30 @@
+import getColor from 'color';
 import React from 'react';
 import { Animated } from 'react-native';
-import { IconButton as RNPIconButton, Colors, useTheme } from 'react-native-paper';
+import { IconButton as RNPIconButton, useTheme } from 'react-native-paper';
 import { createBtnAnim } from '../utils';
 
 export interface IconButtonProps {
+  backgroundColor?: string;
   color?: string;
   height?: number;
   iconName: string;
   onPress?: () => void;
+  rippleColor?: string;
   size?: number;
   width?: number;
 }
 
-export const IconButton: React.FC<IconButtonProps> = ({ color, height, iconName, onPress, size, width }) => {
+export const IconButton: React.FC<IconButtonProps> = ({
+  backgroundColor,
+  color,
+  height,
+  iconName,
+  onPress,
+  rippleColor,
+  size,
+  width,
+}) => {
   const { colors, roundness } = useTheme();
   const buttonAnim = new Animated.Value(0);
   const btnSpringAnim = createBtnAnim(buttonAnim);
@@ -26,7 +38,7 @@ export const IconButton: React.FC<IconButtonProps> = ({ color, height, iconName,
   };
 
   const buttonStyle: any = {
-    backgroundColor: color ? color : colors.gray,
+    backgroundColor: backgroundColor ? backgroundColor : colors.gray,
     borderRadius: roundness,
   };
 
@@ -41,8 +53,8 @@ export const IconButton: React.FC<IconButtonProps> = ({ color, height, iconName,
   return (
     <Animated.View style={[{ transform: [{ scale: btnSpringAnim.scale }] }]}>
       <RNPIconButton
-        color={Colors.white}
-        rippleColor={color ? color : 'black'}
+        color={color ? color : colors.white}
+        rippleColor={getColor(colors.black).alpha(0.2).toString()}
         size={size ? size : 34}
         style={buttonStyle}
         icon={iconName}

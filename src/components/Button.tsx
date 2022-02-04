@@ -39,7 +39,7 @@ export const Button: React.FC<ButtonProps> = ({ disabled = false, onPress, title
   };
 
   const labelStyle = {
-    color: colors.background,
+    color: colors.success.text,
     fontSize: 24,
     opacity: disabled ? 0.75 : 1,
   };

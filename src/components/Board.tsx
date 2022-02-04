@@ -23,11 +23,18 @@ export const BoardRow: React.FC<BoardRowProps> = ({ letters, size = 5 }) => {
     }
   }
 
+  const gutters = {
+    4: 'md',
+    5: 'sm',
+    6: 'xs',
+    7: 'xxs',
+  };
+
   return (
-    <Row>
+    <Row guttersHorizontal='lg'>
       {cells.map((cell, index) => (
-        <Col gutters='sm' key={index}>
-          <LetterCard letter={cell.letter} status={cell.status} />
+        <Col flex={1} gutters={gutters[size]} key={index}>
+          <LetterCard letter={cell.letter} status={cell.status} size={size === 7 ? 'md' : undefined} />
         </Col>
       ))}
     </Row>

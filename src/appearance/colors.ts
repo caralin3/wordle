@@ -3,10 +3,14 @@ export const customColors = {
     background: '#6b6e6c',
     text: '#fff',
   },
+  black: '#000',
+  border: '#eee',
+  gray: '#6b6e6c',
   failure: {
     background: '#393b3a',
     text: '#fff',
   },
+  red: '#f01c05',
   success: {
     background: '#0e8f33',
     disabled: '#34543d',
@@ -20,6 +24,7 @@ export const customColors = {
     background: '#f2c511',
     text: '#fff',
   },
+  white: '#fff',
 };
 
 export const ColorStatusTheme = {
@@ -33,10 +38,9 @@ export const ColorStatusTheme = {
   },
   set: {
     backgroundColor: customColors.unset.background,
-    borderColor: customColors.available.background,
+    borderColor: customColors.black,
     borderWidth: 2,
-    color: customColors.available.background,
-    paddingHorizontal: 4,
+    color: customColors.black,
   },
   success: {
     backgroundColor: customColors.success.background,

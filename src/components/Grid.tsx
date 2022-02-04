@@ -1,19 +1,11 @@
 import * as React from 'react';
 import { FlexAlignType, StyleSheet, View, ViewStyle } from 'react-native';
-
-const Sizes = {
-  xxs: 1,
-  xs: 3,
-  sm: 5,
-  md: 10,
-  lg: 20,
-};
-
+import { GutterSizes } from '../appearance';
 export interface RowProps {
   align?: FlexAlignType;
   flex?: number;
-  guttersHorizontal?: keyof typeof Sizes;
-  guttersVertical?: keyof typeof Sizes;
+  guttersHorizontal?: keyof typeof GutterSizes;
+  guttersVertical?: keyof typeof GutterSizes;
   justify?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
   style?: ViewStyle;
 }
@@ -36,8 +28,8 @@ export const Row: React.FC<RowProps> = ({
           flex,
           alignItems: align ?? 'center',
           justifyContent: justify ?? 'space-between',
-          paddingHorizontal: !!guttersHorizontal ? Sizes[guttersHorizontal] : Sizes.lg,
-          paddingVertical: !!guttersVertical ? Sizes[guttersVertical] : undefined,
+          paddingHorizontal: !!guttersHorizontal ? GutterSizes[guttersHorizontal] : undefined,
+          paddingVertical: !!guttersVertical ? GutterSizes[guttersVertical] : undefined,
         },
       ]}
     >
@@ -56,7 +48,7 @@ const rowStyles = StyleSheet.create({
 export interface ColProps {
   align?: FlexAlignType;
   flex?: number;
-  gutters?: keyof typeof Sizes;
+  gutters?: keyof typeof GutterSizes;
   justify?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
   style?: ViewStyle;
 }
@@ -69,7 +61,7 @@ export const Col: React.FC<ColProps> = ({ align, children, flex, gutters, justif
         flex,
         alignItems: align ?? 'center',
         justifyContent: justify ?? 'center',
-        padding: !!gutters ? Sizes[gutters] : undefined,
+        padding: !!gutters ? GutterSizes[gutters] : undefined,
       }}
     >
       {children}

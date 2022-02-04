@@ -1,22 +1,30 @@
 import * as React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Card } from 'react-native-paper';
-import { ColorStatusTheme } from '../appearance';
+import { Text } from './Text';
+import { ColorStatusTheme, TextSizes } from '../appearance';
 import { LetterStatus } from '../types';
 
 export interface LetterCardProps {
   letter: string;
+  size?: keyof typeof TextSizes;
   status?: LetterStatus;
 }
 
-export const LetterCard: React.FC<LetterCardProps> = ({ letter, status }) => {
+export const LetterCard: React.FC<LetterCardProps> = ({ letter, size, status }) => {
   return (
     <Card style={[styles.container, ColorStatusTheme[status]]} elevation={3}>
       <Card.Content>
         {letter === '' ? (
-          <Text style={[styles.text, { fontSize: 20, opacity: 0 }]}>X</Text>
+          <Text bold size='lg' style={StyleSheet.flatten([styles.text, { opacity: 0 }])}>
+            X
+          </Text>
         ) : (
-          <Text style={[styles.text, { fontSize: 22, color: ColorStatusTheme[status].color }]}>
+          <Text
+            bold
+            size={size ? size : 'xl'}
+            style={StyleSheet.flatten([styles.text, { color: ColorStatusTheme[status].color }])}
+          >
             {letter.toUpperCase()}
           </Text>
         )}
@@ -29,15 +37,9 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     borderWidth: 1,
-    fontWeight: 'bold',
-    justifyContent: 'center',
-    paddingHorizontal: 5,
     width: '100%',
   },
   text: {
-    alignItems: 'center',
-    fontWeight: 'bold',
-    lineHeight: 24,
-    textAlign: 'center',
+    lineHeight: TextSizes.xxl,
   },
 });

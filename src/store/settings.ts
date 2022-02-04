@@ -23,6 +23,6 @@ export const SettingsSlice = createSlice({
   },
 });
 
-export const { setWordLength } = SettingsSlice.actions;
+export const { setDarkMode, setWordLength } = SettingsSlice.actions;
 
 export default SettingsSlice.reducer;
