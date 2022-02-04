@@ -34,6 +34,8 @@ export const GameScreen: React.FC = () => {
   const currentGuess = useSelector((state: RootState) => state.game.currentGuess);
   const darkMode = useSelector((state: RootState) => state.settings.darkMode);
   const wordLength = useSelector((state: RootState) => state.settings.wordLength);
+  const stats = useSelector((state: RootState) => state.statistics.stats);
+  const guesses = useSelector((state: RootState) => state.statistics.guesses);
 
   const [visible, setVisible] = React.useState(false);
   const [showHelp, setShowHelp] = React.useState(false);
@@ -54,7 +56,7 @@ export const GameScreen: React.FC = () => {
     dispatch(gameState.incrementAttempt());
     const correct = result.filter((letter) => letter.status === 'success');
     if (correct.length === wordLength) {
-      Alert.alert('Sucess');
+      setShowStatistics(true);
       // dispatch(gameState.resetBoard());
     }
     dispatch(gameState.resetCurrentGuess());
@@ -93,7 +95,12 @@ export const GameScreen: React.FC = () => {
           openStatistics={() => setShowStatistics(true)}
           wordLength={(wordLength || 5).toString()}
         />
-        <StatisticsModal visible={showStatistics} onDismiss={() => setShowStatistics(false)} />
+        <StatisticsModal
+          stats={stats}
+          guesses={guesses}
+          visible={showStatistics}
+          onDismiss={() => setShowStatistics(false)}
+        />
       </View>
     </SafeAreaView>
   );

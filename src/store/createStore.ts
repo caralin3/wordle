@@ -4,6 +4,7 @@ import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } fro
 import counterReducer from './counter';
 import gameReducer from './game';
 import settingsReducer from './settings';
+import statisticsReducer from './statistics';
 
 const persistConfig = {
   key: 'root',
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   counter: counterReducer,
   game: gameReducer,
   settings: settingsReducer,
+  statistics: statisticsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

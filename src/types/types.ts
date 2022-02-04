@@ -14,3 +14,13 @@ export interface WordleBoard {
 export interface WordleKeyboard {
   [key: string]: LetterStatus;
 }
+export interface Stats {
+  played: number;
+  win: number;
+  currentStreak: number;
+  maxStreak: number;
+}
+
+export interface GuessStats {
+  [key: number]: number;
+}
