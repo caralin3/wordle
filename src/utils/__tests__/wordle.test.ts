@@ -112,14 +112,14 @@ describe('Wordle', () => {
     it('should return correct statuses if duplicate letters guessed, but only one is in the word', () => {
       const guess = 'sits';
       const results = wordle(guess, answer);
-      expect(results.length).toBe(7);
+      expect(results.length).toBe(4);
       expect(results[0]).toEqual({
         letter: 's',
         status: 'wrong',
       });
       expect(results[1]).toEqual({
         letter: 'i',
-        status: 'wrong',
+        status: 'failure',
       });
       expect(results[2]).toEqual({
         letter: 't',
@@ -283,7 +283,7 @@ describe('Wordle', () => {
     it('should return correct statuses if duplicate letters guessed, but only one is in the word', () => {
       const guess = 'strut';
       const results = wordle(guess, answer);
-      expect(results.length).toBe(7);
+      expect(results.length).toBe(5);
       expect(results[0]).toEqual({
         letter: 's',
         status: 'wrong',
@@ -482,7 +482,7 @@ describe('Wordle', () => {
     it('should return correct statuses if duplicate letters guessed, but only one is in the word', () => {
       const guess = 'possum';
       const results = wordle(guess, answer);
-      expect(results.length).toBe(7);
+      expect(results.length).toBe(6);
       expect(results[0]).toEqual({
         letter: 'p',
         status: 'success',
@@ -628,7 +628,7 @@ describe('Wordle', () => {
       });
       expect(results[4]).toEqual({
         letter: 'r',
-        status: 'wrong',
+        status: 'failure',
       });
       expect(results[5]).toEqual({
         letter: 'n',

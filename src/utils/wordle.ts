@@ -62,15 +62,18 @@ function setLetterStates(guess, answer) {
   for (let j = 0; j < result.length; j++) {
     const item = result[j];
     const correctLetters = result.filter((res) => res.status === 'success' && res.letter === item.letter).length;
-    if (correctLetters > 0) {
-      if (answerFreq[item.letter] > guessFreq[item.letter] - correctLetters) {
-        if (!!answerDict[item.letter] && item.status !== 'success' && answer[j] !== item.letter) {
+    const wrongLetters = result.filter((res) => res.status === 'wrong' && res.letter === item.letter).length;
+    if (!!answerDict[item.letter] && item.status !== 'success') {
+      if (correctLetters > 0) {
+        if (answerFreq[item.letter] > guessFreq[item.letter] - correctLetters) {
           result[j].status = 'wrong';
         }
-      }
-    } else {
-      if (!!answerDict[item.letter] && item.status !== 'success' && answer[j] !== item.letter) {
+      } else {
         result[j].status = 'wrong';
+
+        if (wrongLetters > 0 && wrongLetters === answerFreq[item.letter]) {
+          result[j].status = 'failure';
+        }
       }
     }
   }
