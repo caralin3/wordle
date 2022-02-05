@@ -20,12 +20,6 @@ import * as settingsState from '../store/settings';
 import * as statisticsState from '../store/statistics';
 import { isValidWord, wordle } from '../utils';
 
-/**
- * @TODO:
- * Helper modal
- *
- */
-
 export const GameScreen: React.FC = () => {
   const dispatch = useDispatch();
 
@@ -38,33 +32,41 @@ export const GameScreen: React.FC = () => {
   const stats = useSelector((state: RootState) => state.statistics.stats);
   const guesses = useSelector((state: RootState) => state.statistics.guesses);
 
-  const [visible, setVisible] = React.useState(false);
+  const [showNotFound, setShowNotFound] = React.useState(false);
+  const [showSuccess, setShowSuccess] = React.useState(false);
   const [showHelp, setShowHelp] = React.useState(false);
   const [showSettings, setShowSettings] = React.useState(false);
   const [showStatistics, setShowStatistics] = React.useState(false);
 
-  React.useEffect(() => {
-    // dispatch(gameState.resetBoard());
-    // dispatch(settingsState.setWordLength(5));
-    // dispatch(statisticsState.resetStatistics());
-  }, []);
+  // React.useEffect(() => {
+  // dispatch(gameState.resetBoard());
+  // dispatch(settingsState.setWordLength(5));
+  // dispatch(statisticsState.resetStatistics());
+  // }, []);
 
   const answer = 'rusty';
 
   const handleSubmit = () => {
-    // if (isValidWord(currentGuess)) {
-    const result = wordle(currentGuess, answer);
-    dispatch(gameState.submitAttempt({ attempt: currentAttempt, result }));
-    dispatch(gameState.incrementAttempt());
-    const correct = result.filter((letter) => letter.status === 'success');
-    if (correct.length === wordLength) {
-      setShowStatistics(true);
-      // dispatch(gameState.resetBoard());
+    if (isValidWord(currentGuess)) {
+      const result = wordle(currentGuess, answer);
+      dispatch(gameState.submitAttempt({ attempt: currentAttempt, result }));
+      dispatch(gameState.incrementAttempt());
+      const correct = result.filter((letter) => letter.status === 'success');
+      if (correct.length === wordLength) {
+        setShowSuccess(true);
+        setTimeout(() => setShowSuccess(false), 1000);
+        setTimeout(() => setShowStatistics(true), 1000);
+      }
+      dispatch(gameState.resetCurrentGuess());
+    } else {
+      setShowNotFound(true);
+      setTimeout(() => setShowNotFound(false), 1000);
     }
-    dispatch(gameState.resetCurrentGuess());
-    // } else {
-    //   setVisible(true);
-    // }
+  };
+
+  const handleNewGame = () => {
+    setShowStatistics(false);
+    dispatch(gameState.resetBoard());
   };
 
   return (
@@ -85,7 +87,6 @@ export const GameScreen: React.FC = () => {
           onBackspace={() => dispatch(gameState.removeLetter())}
           onPress={(letter) => dispatch(gameState.addLetter(letter))}
         />
-        <Toast visible={visible} onDismiss={() => setVisible(false)} message='Word not found.' />
         <HelperModal visible={showHelp} onDismiss={() => setShowHelp(false)} />
         <SettingsModal
           darkMode={darkMode}
@@ -102,7 +103,10 @@ export const GameScreen: React.FC = () => {
           guesses={guesses}
           visible={showStatistics}
           onDismiss={() => setShowStatistics(false)}
+          onNewGame={handleNewGame}
         />
+        <Toast visible={showSuccess} onDismiss={() => setShowSuccess(false)} message='Correct' type='success' />
+        <Toast visible={showNotFound} onDismiss={() => setShowNotFound(false)} message='Word not found' />
       </View>
     </SafeAreaView>
   );

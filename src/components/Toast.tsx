@@ -1,5 +1,8 @@
 import React from 'react';
-import { Snackbar, useTheme } from 'react-native-paper';
+import { StyleSheet } from 'react-native';
+import { Modal as RNPModal, Portal, useTheme } from 'react-native-paper';
+import { Text } from './Text';
+import { GutterSizes } from '../appearance';
 
 export interface ToastProps {
   onDismiss: () => void;
@@ -9,24 +12,45 @@ export interface ToastProps {
 }
 
 export const Toast: React.FC<ToastProps> = ({ onDismiss, message, type = 'error', visible }) => {
-  const { colors } = useTheme();
+  const { colors, roundness } = useTheme();
+
   return (
-    <Snackbar
-      visible={visible}
-      onDismiss={onDismiss}
-      action={{
-        label: 'X',
-        onPress: onDismiss,
-        labelStyle: {
-          color: colors.white,
-        },
-        style: {
-          backgroundColor: type === 'error' ? colors.error : colors.success.background,
+    <Portal
+      theme={{
+        colors: {
+          backdrop: 'transparent',
         },
       }}
-      style={{ backgroundColor: type === 'error' ? colors.error : colors.success.background }}
     >
-      {message}
-    </Snackbar>
+      <RNPModal
+        visible={visible}
+        onDismiss={onDismiss}
+        contentContainerStyle={[
+          styles.containerStyle,
+          {
+            backgroundColor: type === 'error' ? colors.red : colors.success.background,
+            borderRadius: roundness,
+          },
+        ]}
+        style={styles.modal}
+      >
+        <Text bold textColor='white'>
+          {message}
+        </Text>
+      </RNPModal>
+    </Portal>
   );
 };
+
+const styles = StyleSheet.create({
+  modal: {
+    alignItems: 'center',
+  },
+  containerStyle: {
+    alignItems: 'center',
+    padding: GutterSizes.md,
+    justifyContent: 'center',
+    maxWidth: 300,
+    width: '50%',
+  },
+});

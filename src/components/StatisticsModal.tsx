@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useTheme } from 'react-native-paper';
-import { customColors, GutterSizes } from '../appearance';
+import { Button, useTheme } from 'react-native-paper';
+import { GutterSizes, TextSizes } from '../appearance';
 import { GuessStats, Stats } from '../types';
 import { BarChart } from './BarChart';
 import { Col, Row } from './Grid';
@@ -11,13 +11,13 @@ import { Text } from './Text';
 export interface StatisticsModalProps {
   guesses: GuessStats[];
   onDismiss: () => void;
+  onNewGame: () => void;
   stats: Stats;
   visible: boolean;
 }
 
-export const StatisticsModal: React.FC<StatisticsModalProps> = ({ guesses, onDismiss, stats, visible }) => {
+export const StatisticsModal: React.FC<StatisticsModalProps> = ({ guesses, onDismiss, onNewGame, stats, visible }) => {
   const { colors } = useTheme();
-
   const labels = {
     played: 'Played',
     win: 'Win %',
@@ -26,7 +26,7 @@ export const StatisticsModal: React.FC<StatisticsModalProps> = ({ guesses, onDis
   };
 
   return (
-    <Modal title='Statistics' visible={visible} onDismiss={onDismiss}>
+    <Modal dismissable={false} title='Statistics' visible={visible} onDismiss={onDismiss}>
       <View style={styles.container}>
         <Row align='flex-start'>
           {Object.keys(stats).map((key) => (
@@ -45,6 +45,9 @@ export const StatisticsModal: React.FC<StatisticsModalProps> = ({ guesses, onDis
             <BarChart guesses={guesses} />
           </View>
         )}
+        <Button labelStyle={{ fontSize: TextSizes.md }} onPress={onNewGame}>
+          New Game
+        </Button>
       </View>
     </Modal>
   );

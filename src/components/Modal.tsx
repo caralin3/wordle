@@ -5,19 +5,21 @@ import { Col, Row } from './Grid';
 import { customColors } from '../appearance';
 
 export interface ModalProps {
+  dismissable?: boolean;
   onDismiss: () => void;
   title?: string;
   visible: boolean;
 }
 
-export const Modal: React.FC<ModalProps> = ({ children, onDismiss, title, visible }) => {
+export const Modal: React.FC<ModalProps> = ({ children, dismissable, onDismiss, title, visible }) => {
   const { colors, roundness } = useTheme();
   return (
     <Portal>
       <RNPModal
-        visible={visible}
-        onDismiss={onDismiss}
         contentContainerStyle={[styles.containerStyle, { borderRadius: roundness }]}
+        dismissable={dismissable}
+        onDismiss={onDismiss}
+        visible={visible}
         style={styles.modal}
       >
         <Row>
