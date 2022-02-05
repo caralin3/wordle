@@ -34,28 +34,50 @@ export const GameScreen: React.FC = () => {
 
   const [showNotFound, setShowNotFound] = React.useState(false);
   const [showSuccess, setShowSuccess] = React.useState(false);
+  const [showFailure, setShowFailure] = React.useState(false);
   const [showHelp, setShowHelp] = React.useState(false);
   const [showSettings, setShowSettings] = React.useState(false);
   const [showStatistics, setShowStatistics] = React.useState(false);
 
   // React.useEffect(() => {
-  // dispatch(gameState.resetBoard());
-  // dispatch(settingsState.setWordLength(5));
-  // dispatch(statisticsState.resetStatistics());
+  //   dispatch(gameState.resetBoard());
+  //   dispatch(settingsState.setWordLength(5));
+  //   dispatch(statisticsState.resetStatistics());
   // }, []);
 
   const answer = 'rusty';
+
+  const handleSuccess = () => {
+    setShowSuccess(true);
+    setTimeout(() => {
+      setShowSuccess(false);
+      dispatch(statisticsState.updateWinStats());
+      dispatch(statisticsState.updateGuess(currentAttempt + 1));
+    }, 1000);
+    setTimeout(() => setShowStatistics(true), 1000);
+  };
+
+  const handleFailure = () => {
+    setShowFailure(true);
+    setTimeout(() => {
+      setShowFailure(false);
+      dispatch(statisticsState.updateLossStats());
+      setShowStatistics(true);
+    }, 2000);
+  };
 
   const handleSubmit = () => {
     if (isValidWord(currentGuess)) {
       const result = wordle(currentGuess, answer);
       dispatch(gameState.submitAttempt({ attempt: currentAttempt, result }));
-      dispatch(gameState.incrementAttempt());
       const correct = result.filter((letter) => letter.status === 'success');
       if (correct.length === wordLength) {
-        setShowSuccess(true);
-        setTimeout(() => setShowSuccess(false), 1000);
-        setTimeout(() => setShowStatistics(true), 1000);
+        handleSuccess();
+      } else {
+        // wrong on last attempt
+        if (currentAttempt === 5) {
+          handleFailure();
+        }
       }
       dispatch(gameState.resetCurrentGuess());
     } else {
@@ -105,6 +127,7 @@ export const GameScreen: React.FC = () => {
           onDismiss={() => setShowStatistics(false)}
           onNewGame={handleNewGame}
         />
+        <Toast visible={showFailure} onDismiss={() => setShowFailure(false)} message={answer.toUpperCase()} />
         <Toast visible={showSuccess} onDismiss={() => setShowSuccess(false)} message='Correct' type='success' />
         <Toast visible={showNotFound} onDismiss={() => setShowNotFound(false)} message='Word not found' />
       </View>

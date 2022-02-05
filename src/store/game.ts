@@ -26,8 +26,8 @@ export const GameSlice = createSlice({
         rows[i] = [];
       }
       state.board = rows;
-      state.currentAttempt = 0;
-      state.currentGuess = '';
+      state.currentAttempt = initialState.currentAttempt;
+      state.currentGuess = initialState.currentGuess;
       state.keyboard = alphabet;
     },
     resetCurrentGuess: (state) => {
@@ -67,6 +67,7 @@ export const GameSlice = createSlice({
     ) => {
       const { attempt, result } = action.payload;
       state.board[attempt] = result;
+      state.currentAttempt += 1;
 
       const failureRes = result.filter((cell) => cell.status === 'failure');
       const wrongRes = result.filter((cell) => cell.status === 'wrong');

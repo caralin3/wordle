@@ -24,7 +24,7 @@ export const BarChart: React.FC<BarChartProps> = ({ guesses }) => {
             fontWeight: 'bold',
           },
           tickLabels: {
-            fontSize: TextSizes.sm,
+            padding: 0,
           },
         }}
       />

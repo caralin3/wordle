@@ -33,6 +33,7 @@ export const StatisticsModal: React.FC<StatisticsModalProps> = ({ guesses, onDis
             <Col key={key}>
               <Text bold align='center' textColor='success' size='lg'>
                 {stats[key]}
+                {key === 'win' ? '%' : ''}
               </Text>
               <Text bold align='center' size='sm'>
                 {labels[key]}
