@@ -3,20 +3,19 @@ import { GuessStats, Stats } from '../types';
 import { MAX_ATTEMPTS } from '../utils';
 
 export interface StatisticsState {
-  guesses: GuessStats;
+  guesses: GuessStats[];
   stats: Stats;
 }
 
-function initGuesses() {
-  const guesses: GuessStats = {};
-  for (let i = 0; i < MAX_ATTEMPTS; i++) {
-    guesses[i + 1] = 0;
-  }
-  return guesses;
-}
-
 const initialState: StatisticsState = {
-  guesses: initGuesses(),
+  guesses: [
+    { attempt: 1, value: 10 },
+    { attempt: 2, value: 4 },
+    { attempt: 3, value: 24 },
+    { attempt: 4, value: 5 },
+    { attempt: 5, value: 9 },
+    { attempt: 6, value: 4 },
+  ],
   stats: {
     played: 0,
     win: 0,
@@ -33,7 +32,7 @@ export const StatisticsSlice = createSlice({
     setStats: (state, action: PayloadAction<Stats>) => {
       state.stats = action.payload;
     },
-    setGuesses: (state, action: PayloadAction<GuessStats>) => {
+    setGuesses: (state, action: PayloadAction<GuessStats[]>) => {
       state.guesses = action.payload;
     },
   },

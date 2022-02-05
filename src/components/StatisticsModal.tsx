@@ -1,21 +1,21 @@
-import getColor from 'color';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Switch, TouchableRipple, useTheme } from 'react-native-paper';
+import { useTheme } from 'react-native-paper';
 import { customColors, GutterSizes } from '../appearance';
 import { GuessStats, Stats } from '../types';
+import { BarChart } from './BarChart';
 import { Col, Row } from './Grid';
 import { Modal } from './Modal';
 import { Text } from './Text';
 
 export interface StatisticsModalProps {
-  guesses: GuessStats;
+  guesses: GuessStats[];
   onDismiss: () => void;
   stats: Stats;
   visible: boolean;
 }
 
-export const StatisticsModal: React.FC<StatisticsModalProps> = ({ onDismiss, stats, visible }) => {
+export const StatisticsModal: React.FC<StatisticsModalProps> = ({ guesses, onDismiss, stats, visible }) => {
   const { colors } = useTheme();
 
   const labels = {
@@ -27,29 +27,35 @@ export const StatisticsModal: React.FC<StatisticsModalProps> = ({ onDismiss, sta
 
   return (
     <Modal title='Statistics' visible={visible} onDismiss={onDismiss}>
-      <View style={{ flex: 1 }}>
+      <View style={styles.container}>
         <Row align='flex-start'>
           {Object.keys(stats).map((key) => (
             <Col key={key}>
-              <Text bold align='center' textColor='success'>
+              <Text bold align='center' textColor='success' size='lg'>
                 {stats[key]}
               </Text>
-              <Text bold align='center'>
+              <Text bold align='center' size='sm'>
                 {labels[key]}
               </Text>
             </Col>
           ))}
         </Row>
+        {guesses.filter((guess) => guess.value > 0).length > 0 && (
+          <View style={styles.chart}>
+            <BarChart guesses={guesses} />
+          </View>
+        )}
       </View>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-  row: {
-    borderColor: customColors.border,
-    borderTopWidth: 1,
-    marginTop: GutterSizes.md,
-    paddingTop: GutterSizes.md,
+  container: {
+    flex: 1,
+  },
+  chart: {
+    marginLeft: -35,
+    paddingBottom: GutterSizes.md,
   },
 });

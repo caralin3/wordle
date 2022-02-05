@@ -1,3 +1,4 @@
+export * from './BarChart';
 export * from './Button';
 export * from './Board';
 export * from './Counter';

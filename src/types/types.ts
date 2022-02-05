@@ -22,5 +22,6 @@ export interface Stats {
 }
 
 export interface GuessStats {
-  [key: number]: number;
+  attempt: number;
+  value: number;
 }

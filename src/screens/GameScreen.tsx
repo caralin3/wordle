@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -17,6 +17,7 @@ import {
 import { RootState } from '../store';
 import * as gameState from '../store/game';
 import * as settingsState from '../store/settings';
+import * as statisticsState from '../store/statistics';
 import { isValidWord, wordle } from '../utils';
 
 /**
@@ -45,6 +46,7 @@ export const GameScreen: React.FC = () => {
   React.useEffect(() => {
     // dispatch(gameState.resetBoard());
     dispatch(settingsState.setWordLength(4));
+    dispatch(statisticsState.resetStatistics());
   }, []);
 
   const answer = 'rusty';
