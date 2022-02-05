@@ -45,8 +45,8 @@ export const GameScreen: React.FC = () => {
 
   React.useEffect(() => {
     // dispatch(gameState.resetBoard());
-    dispatch(settingsState.setWordLength(4));
-    dispatch(statisticsState.resetStatistics());
+    // dispatch(settingsState.setWordLength(5));
+    // dispatch(statisticsState.resetStatistics());
   }, []);
 
   const answer = 'rusty';

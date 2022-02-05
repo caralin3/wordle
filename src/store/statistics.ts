@@ -9,12 +9,12 @@ export interface StatisticsState {
 
 const initialState: StatisticsState = {
   guesses: [
-    { attempt: 1, value: 10 },
-    { attempt: 2, value: 4 },
-    { attempt: 3, value: 24 },
-    { attempt: 4, value: 5 },
-    { attempt: 5, value: 9 },
-    { attempt: 6, value: 4 },
+    { attempt: 1, value: 0 },
+    { attempt: 2, value: 0 },
+    { attempt: 3, value: 0 },
+    { attempt: 4, value: 0 },
+    { attempt: 5, value: 0 },
+    { attempt: 6, value: 0 },
   ],
   stats: {
     played: 0,
