@@ -5,6 +5,7 @@ export const TextSizes = {
   lg: 20,
   xl: 22,
   xxl: 24,
+  xxxl: 32,
 };
 
 export const GutterSizes = {

@@ -94,7 +94,7 @@ export const GameScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <Text bold size='xxl' gutters={{ bottom: 'md', top: 'md' }}>
+        <Text bold size='xxxl' gutters={{ bottom: 'md' }}>
           Wordle
         </Text>
         <Board board={board} size={wordLength} />
