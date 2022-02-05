@@ -3,6 +3,7 @@ import { Animated, StyleSheet, Text, TextStyle, TouchableHighlight } from 'react
 import { useTheme } from 'react-native-paper';
 import { ColorStatusTheme } from '../appearance';
 import { LetterStatus } from '../types';
+import { createBtnAnim } from '../utils';
 
 export interface LetterButtonProps {
   disabled?: boolean;
@@ -19,22 +20,7 @@ export const LetterButton: React.FC<LetterButtonProps> = ({
 }) => {
   const { roundness } = useTheme();
   const buttonAnim = new Animated.Value(0);
-  const inputRange = [0, 1];
-  const outputRange = [1, 0.9];
-  const scale = buttonAnim.interpolate({ inputRange, outputRange });
-
-  const onPressIn = () => {
-    Animated.spring(buttonAnim, {
-      toValue: 1,
-      useNativeDriver: true,
-    }).start();
-  };
-  const onPressOut = () => {
-    Animated.spring(buttonAnim, {
-      toValue: 0,
-      useNativeDriver: true,
-    }).start();
-  };
+  const { onPressIn, onPressOut, scale } = createBtnAnim(buttonAnim);
 
   const commonStyles: TextStyle = {
     borderRadius: roundness,
@@ -51,7 +37,6 @@ export const LetterButton: React.FC<LetterButtonProps> = ({
         style={[styles.container, { borderRadius: roundness }]}
         underlayColor={ColorStatusTheme[status].backgroundColor}
       >
-        {/* @TODO: Update text to import { Text } from './Text'; */}
         <Text style={[styles.content, commonStyles, ColorStatusTheme[status]]}>{title}</Text>
       </TouchableHighlight>
     </Animated.View>
@@ -59,7 +44,9 @@ export const LetterButton: React.FC<LetterButtonProps> = ({
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    elevation: 3,
+  },
   content: {
     fontSize: 22,
     fontWeight: 'bold',

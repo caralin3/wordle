@@ -27,19 +27,12 @@ export const IconButton: React.FC<IconButtonProps> = ({
 }) => {
   const { colors, roundness } = useTheme();
   const buttonAnim = new Animated.Value(0);
-  const btnSpringAnim = createBtnAnim(buttonAnim);
-
-  const handlePress = () => {
-    btnSpringAnim.onPressIn();
-    btnSpringAnim.onPressOut();
-    if (!!onPress) {
-      onPress();
-    }
-  };
+  const { onPressIn, onPressOut, scale } = createBtnAnim(buttonAnim);
 
   const buttonStyle: any = {
     backgroundColor: backgroundColor ? backgroundColor : colors.gray,
     borderRadius: roundness,
+    elevation: 3,
   };
 
   if (!!height) {
@@ -51,14 +44,16 @@ export const IconButton: React.FC<IconButtonProps> = ({
   }
 
   return (
-    <Animated.View style={[{ transform: [{ scale: btnSpringAnim.scale }] }]}>
+    <Animated.View style={[{ transform: [{ scale: scale }] }]}>
       <RNPIconButton
         color={color ? color : colors.white}
         rippleColor={getColor(colors.black).alpha(0.2).toString()}
         size={size ? size : 34}
         style={buttonStyle}
         icon={iconName}
-        onPress={handlePress}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
+        onPress={onPress}
       />
     </Animated.View>
   );

@@ -128,8 +128,13 @@ export const GameScreen: React.FC = () => {
           onNewGame={handleNewGame}
         />
         <Toast visible={showFailure} onDismiss={() => setShowFailure(false)} message={answer.toUpperCase()} />
-        <Toast visible={showSuccess} onDismiss={() => setShowSuccess(false)} message='Correct' type='success' />
-        <Toast visible={showNotFound} onDismiss={() => setShowNotFound(false)} message='Word not found' />
+        <Toast
+          visible={showSuccess}
+          onDismiss={() => setShowSuccess(false)}
+          message='You Got It Right!'
+          type='success'
+        />
+        <Toast visible={showNotFound} onDismiss={() => setShowNotFound(false)} message='Word Not Valid' />
       </View>
     </SafeAreaView>
   );

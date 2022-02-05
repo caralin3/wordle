@@ -34,7 +34,7 @@ export const Toast: React.FC<ToastProps> = ({ onDismiss, message, type = 'error'
         ]}
         style={styles.modal}
       >
-        <Text bold textColor='white'>
+        <Text bold size='xl' textColor='white'>
           {message}
         </Text>
       </RNPModal>
@@ -48,7 +48,8 @@ const styles = StyleSheet.create({
   },
   containerStyle: {
     alignItems: 'center',
-    padding: GutterSizes.md,
+    paddingHorizontal: GutterSizes.md,
+    paddingVertical: GutterSizes.lg,
     justifyContent: 'center',
     maxWidth: 300,
     width: '50%',
