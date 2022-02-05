@@ -1,6 +1,5 @@
-import { ColorStatusTheme } from '../appearance';
-
-export type LetterStatus = keyof typeof ColorStatusTheme;
+export type LetterStatus = 'available' | 'unset' | 'set' | 'success' | 'wrong';
+('failure');
 
 export interface Cell {
   letter: string;

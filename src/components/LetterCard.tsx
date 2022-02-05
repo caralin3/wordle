@@ -2,8 +2,9 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { Card } from 'react-native-paper';
 import { Text } from './Text';
-import { ColorStatusTheme, TextSizes } from '../appearance';
+import { getColorStatus, TextSizes } from '../appearance';
 import { LetterStatus } from '../types';
+import { PreferencesContext } from '../context';
 
 export interface LetterCardProps {
   letter: string;
@@ -12,8 +13,10 @@ export interface LetterCardProps {
 }
 
 export const LetterCard: React.FC<LetterCardProps> = ({ letter, size, status }) => {
+  const { darkMode } = React.useContext(PreferencesContext);
+  const colorTheme = getColorStatus(darkMode);
   return (
-    <Card style={[styles.container, ColorStatusTheme[status]]} elevation={3}>
+    <Card style={[styles.container, colorTheme[status]]} elevation={3}>
       <Card.Content>
         {letter === '' ? (
           <Text bold size='lg' style={StyleSheet.flatten([styles.text, { opacity: 0 }])}>
@@ -23,7 +26,7 @@ export const LetterCard: React.FC<LetterCardProps> = ({ letter, size, status }) 
           <Text
             bold
             size={size ? size : 'xl'}
-            style={StyleSheet.flatten([styles.text, { color: ColorStatusTheme[status].color }])}
+            style={StyleSheet.flatten([styles.text, { color: colorTheme[status].color }])}
           >
             {letter.toUpperCase()}
           </Text>

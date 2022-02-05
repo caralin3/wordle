@@ -2,16 +2,15 @@ import getColor from 'color';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Switch, TouchableRipple, useTheme } from 'react-native-paper';
-import { customColors, GutterSizes } from '../appearance';
+import { GutterSizes } from '../appearance';
+import { PreferencesContext } from '../context';
 import { Row } from './Grid';
 import { Modal } from './Modal';
 import { Text } from './Text';
 import { ToggleGroup, ToggleItem } from './ToggleGroup';
 
 export interface SettingsModalProps {
-  darkMode: boolean;
   onDismiss: () => void;
-  onSetDarkMode: (value: boolean) => void;
   onSetWordLength: (value: string) => void;
   openSettings: () => void;
   openStatistics: () => void;
@@ -20,15 +19,14 @@ export interface SettingsModalProps {
 }
 
 export const SettingsModal: React.FC<SettingsModalProps> = ({
-  darkMode,
   onDismiss,
-  onSetDarkMode,
   onSetWordLength,
   openSettings,
   openStatistics,
   visible,
   wordLength,
 }) => {
+  const { toggleTheme, darkMode } = React.useContext(PreferencesContext);
   const { colors } = useTheme();
   const wordLengths: ToggleItem[] = [
     {
@@ -53,39 +51,49 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
     <Modal title='Settings' visible={visible} onDismiss={onDismiss}>
       <View style={{ flex: 1 }}>
         <Row>
-          <Text bold>Letters in Word</Text>
+          <Text bold textColor='label'>
+            Letters in Word
+          </Text>
         </Row>
         <Row guttersVertical='md'>
           <ToggleGroup toggleBtns={wordLengths} onValueChange={onSetWordLength} value={wordLength} />
         </Row>
-        <Row style={styles.row} align='center' justify='flex-start'>
-          <Text bold style={{ flex: 1 }}>
+        <Row
+          style={StyleSheet.flatten([styles.row, { borderColor: colors.border }])}
+          align='center'
+          justify='flex-start'
+        >
+          <Text bold textColor='label' style={{ flex: 1 }}>
             Dark Mode
           </Text>
-          <Switch color={colors.notification} value={darkMode} onValueChange={onSetDarkMode} />
+          <Switch color={colors.primary} value={darkMode} onValueChange={toggleTheme} />
         </Row>
-        <Row style={styles.row}>
+        <Row style={StyleSheet.flatten([styles.row, { borderColor: colors.border }])}>
           <TouchableRipple
             onPress={() => {
               onDismiss();
               openSettings();
             }}
-            rippleColor={getColor(colors.notification).alpha(0.3).toString()}
+            rippleColor={getColor(colors.primary).alpha(0.3).toString()}
             style={styles.help}
           >
-            <Text bold>How to Play</Text>
+            <Text bold textColor='label'>
+              How to Play
+            </Text>
           </TouchableRipple>
         </Row>
-        <Row style={styles.row}>
+        <Row style={StyleSheet.flatten([styles.row, { borderColor: colors.border }])}>
           <TouchableRipple
             onPress={() => {
               onDismiss();
               openStatistics();
             }}
-            rippleColor={getColor(colors.notification).alpha(0.3).toString()}
+            rippleColor={getColor(colors.primary).alpha(0.3).toString()}
             style={styles.help}
           >
-            <Text bold>Statistics</Text>
+            <Text bold textColor='label'>
+              Statistics
+            </Text>
           </TouchableRipple>
         </Row>
       </View>
@@ -95,7 +103,6 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
 
 const styles = StyleSheet.create({
   row: {
-    borderColor: customColors.border,
     borderTopWidth: 1,
     marginTop: GutterSizes.md,
     paddingTop: GutterSizes.md,

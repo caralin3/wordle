@@ -1,7 +1,8 @@
 import React from 'react';
 import { Animated, StyleSheet, Text, TextStyle, TouchableHighlight } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import { ColorStatusTheme } from '../appearance';
+import { getColorStatus } from '../appearance';
+import { PreferencesContext } from '../context';
 import { LetterStatus } from '../types';
 import { createBtnAnim } from '../utils';
 
@@ -19,6 +20,8 @@ export const LetterButton: React.FC<LetterButtonProps> = ({
   title,
 }) => {
   const { roundness } = useTheme();
+  const { darkMode } = React.useContext(PreferencesContext);
+  const colorTheme = getColorStatus(darkMode);
   const buttonAnim = new Animated.Value(0);
   const { onPressIn, onPressOut, scale } = createBtnAnim(buttonAnim);
 
@@ -35,9 +38,9 @@ export const LetterButton: React.FC<LetterButtonProps> = ({
         onPressOut={onPressOut}
         onPress={onPress}
         style={[styles.container, { borderRadius: roundness }]}
-        underlayColor={ColorStatusTheme[status].backgroundColor}
+        underlayColor={colorTheme[status].backgroundColor}
       >
-        <Text style={[styles.content, commonStyles, ColorStatusTheme[status]]}>{title}</Text>
+        <Text style={[styles.content, commonStyles, colorTheme[status]]}>{title}</Text>
       </TouchableHighlight>
     </Animated.View>
   );

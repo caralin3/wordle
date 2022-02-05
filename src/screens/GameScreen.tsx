@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { useTheme } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -21,6 +22,7 @@ import * as statisticsState from '../store/statistics';
 import { isValidWord, wordle } from '../utils';
 
 export const GameScreen: React.FC = () => {
+  const { colors } = useTheme();
   const dispatch = useDispatch();
 
   const board = useSelector((state: RootState) => state.game.board);
@@ -93,8 +95,8 @@ export const GameScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
-        <Text bold size='xxxl' gutters={{ bottom: 'md' }}>
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
+        <Text bold textColor='label' size='xxxl' gutters={{ bottom: 'md' }}>
           Wordle
         </Text>
         <Board board={board} size={wordLength} />
@@ -111,10 +113,8 @@ export const GameScreen: React.FC = () => {
         />
         <HelperModal visible={showHelp} onDismiss={() => setShowHelp(false)} />
         <SettingsModal
-          darkMode={darkMode}
           visible={showSettings}
           onDismiss={() => setShowSettings(false)}
-          onSetDarkMode={(val) => dispatch(settingsState.setDarkMode(val))}
           onSetWordLength={(val) => dispatch(settingsState.setWordLength(Number(val)))}
           openSettings={() => setShowHelp(true)}
           openStatistics={() => setShowStatistics(true)}
@@ -146,7 +146,6 @@ const styles = StyleSheet.create({
   },
   container: {
     alignItems: 'center',
-    backgroundColor: '#fff',
     flex: 1,
     justifyContent: 'center',
   },

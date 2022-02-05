@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text as RNText, TextStyle } from 'react-native';
+import { useTheme } from 'react-native-paper';
 import { defaultTheme, GutterSizes, TextSizes } from '../appearance';
 
 export interface TextProps {
@@ -18,10 +19,11 @@ export interface TextProps {
 }
 
 export const Text: React.FC<TextProps> = ({ align, bold, children, textColor, gutters, italic, size, style }) => {
+  const { colors } = useTheme();
   function getTextColor() {
     if (textColor) {
-      const color = defaultTheme.colors[textColor] as any;
-      const isColorObject = typeof defaultTheme.colors[textColor] === 'object';
+      const color = colors[textColor] as any;
+      const isColorObject = typeof colors[textColor] === 'object';
       if (isColorObject) {
         if (!!color && !!color.background) {
           return color.background;
@@ -32,7 +34,7 @@ export const Text: React.FC<TextProps> = ({ align, bold, children, textColor, gu
     if (!!style && !!style.color) {
       return style.color;
     }
-    return undefined;
+    return colors.text;
   }
 
   return (

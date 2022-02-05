@@ -12,6 +12,7 @@ declare global {
         background: string;
         text: string;
       };
+      label: string;
       red: string;
       success: {
         background: string;

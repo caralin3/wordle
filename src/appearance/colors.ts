@@ -1,15 +1,16 @@
-export const customColors = {
+export const lightColors = {
   available: {
-    background: '#6b6e6c',
+    background: '#8F8F8F',
     text: '#fff',
   },
   black: '#000',
   border: '#eee',
-  gray: '#6b6e6c',
+  gray: '#8F8F8F',
   failure: {
     background: '#393b3a',
     text: '#fff',
   },
+  label: '#000',
   red: '#f01c05',
   success: {
     background: '#0e8f33',
@@ -18,7 +19,7 @@ export const customColors = {
   },
   unset: {
     background: '#c7dff0',
-    text: 'black',
+    text: '#000',
   },
   wrong: {
     background: '#f2c511',
@@ -27,31 +28,68 @@ export const customColors = {
   white: '#fff',
 };
 
-export const ColorStatusTheme = {
+export const darkColors = {
   available: {
-    backgroundColor: customColors.available.background,
-    color: customColors.available.text,
+    background: '#8F8F8F',
+    text: '#fff',
+  },
+  black: '#000',
+  border: '#eee',
+  gray: '#8F8F8F',
+  failure: {
+    background: '#000',
+    text: '#fff',
+  },
+  label: '#fff',
+  red: '#f01c05',
+  success: {
+    background: '#0e8f33',
+    disabled: '#34543d',
+    text: '#fff',
   },
   unset: {
-    backgroundColor: customColors.unset.background,
-    color: customColors.unset.text,
-  },
-  set: {
-    backgroundColor: customColors.unset.background,
-    borderColor: customColors.black,
-    borderWidth: 2,
-    color: customColors.black,
-  },
-  success: {
-    backgroundColor: customColors.success.background,
-    color: customColors.success.text,
+    background: '#393b3a',
+    text: '#fff',
   },
   wrong: {
-    backgroundColor: customColors.wrong.background,
-    color: customColors.wrong.text,
+    background: '#f2c511',
+    text: '#fff',
   },
-  failure: {
-    backgroundColor: customColors.failure.background,
-    color: customColors.failure.text,
-  },
+  white: '#fff',
+};
+
+export const getColorStatus = (darkMode: boolean) => {
+  const colors = darkMode ? darkColors : lightColors;
+  return {
+    available: {
+      backgroundColor: colors.available.background,
+      color: colors.available.text,
+    },
+    unset: {
+      backgroundColor: colors.unset.background,
+      borderColor: colors.gray,
+      color: colors.unset.text,
+    },
+    set: {
+      backgroundColor: colors.unset.background,
+      borderColor: colors.unset.text,
+      borderWidth: 2,
+      color: colors.unset.text,
+    },
+    success: {
+      backgroundColor: colors.success.background,
+      borderColor: colors.gray,
+      color: colors.success.text,
+    },
+    wrong: {
+      backgroundColor: colors.wrong.background,
+      borderColor: colors.gray,
+      color: colors.wrong.text,
+    },
+    failure: {
+      backgroundColor: colors.failure.background,
+      borderColor: colors.gray,
+      color: colors.failure.text,
+    },
+  };
 };

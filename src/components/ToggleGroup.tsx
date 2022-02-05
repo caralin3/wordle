@@ -18,13 +18,7 @@ export const ToggleGroup: React.FC<ToggleGroupProps> = ({ onValueChange, toggleB
   return (
     <ToggleButton.Row style={styles.group} onValueChange={onValueChange} value={value}>
       {toggleBtns.map((toggleBtn) => (
-        <ToggleButton
-          key={toggleBtn.value}
-          color={colors.notification}
-          size={40}
-          style={styles.button}
-          {...toggleBtn}
-        />
+        <ToggleButton key={toggleBtn.value} color={colors.primary} size={40} style={styles.button} {...toggleBtn} />
       ))}
     </ToggleButton.Row>
   );
