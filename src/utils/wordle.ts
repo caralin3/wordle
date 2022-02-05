@@ -27,6 +27,21 @@ function createIndexDictionary(word: string, answer: string) {
   return dict;
 }
 
+function getLetterFrequency(word: string) {
+  const freq: {
+    [key: string]: number;
+  } = {};
+  for (let i = 0; i < word.length; i++) {
+    const letter = word[i];
+    if (!freq[letter]) {
+      freq[letter] = 1;
+    } else {
+      freq[letter] += 1;
+    }
+  }
+  return freq;
+}
+
 function setLetterStates(guess, answer) {
   const answerDict = createIndexDictionary(answer, guess);
   const result: Cell[] = [];
@@ -41,12 +56,22 @@ function setLetterStates(guess, answer) {
     }
   }
 
-  // @TODO: Fix
-  // update wrong spot
+  const guessFreq = getLetterFrequency(guess);
+  const answerFreq = getLetterFrequency(answer);
+
   for (let j = 0; j < result.length; j++) {
     const item = result[j];
-    if (!!answerDict[item.letter] && item.status !== 'success' && answer[j] !== item.letter) {
-      result[j].status = 'wrong';
+    const correctLetters = result.filter((res) => res.status === 'success' && res.letter === item.letter).length;
+    if (correctLetters > 0) {
+      if (answerFreq[item.letter] > guessFreq[item.letter] - correctLetters) {
+        if (!!answerDict[item.letter] && item.status !== 'success' && answer[j] !== item.letter) {
+          result[j].status = 'wrong';
+        }
+      }
+    } else {
+      if (!!answerDict[item.letter] && item.status !== 'success' && answer[j] !== item.letter) {
+        result[j].status = 'wrong';
+      }
     }
   }
 
