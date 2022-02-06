@@ -8,13 +8,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/appearance/icons/adaptive-icon.png",
         "backgroundColor": "#393b3a"
-      }
+      },
+      "package": "com.steinberg.wordle"
     },
     "splash": {
       "image": "./src/appearance/icons/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "orientation": "portrait"
+    "orientation": "portrait",
+    "ios": {
+      "bundleIdentifier": "com.steinberg.wordle"
+    }
   }
 }

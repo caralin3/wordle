@@ -9,7 +9,9 @@
     "web": "expo start --web",
     "test": "jest",
     "test:debug": "jest -o --watch --coverage=false",
-    "test:updateSnapshots": "jest -u --coverage=false"
+    "test:updateSnapshots": "jest -u --coverage=false",
+    "build:android": "expo build:android",
+    "build:ios": "expo build:ios"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "~1.15.0",
