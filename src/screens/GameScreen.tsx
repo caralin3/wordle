@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
@@ -117,9 +117,10 @@ export const GameScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={[styles.container, { backgroundColor: colors.background }]}>
-        <Text bold textColor='label' size='xxxl' gutters={{ bottom: 'md' }}>
+        <Image source={require('../appearance/images/wordle.png')} resizeMethod='resize' style={styles.image} />
+        {/* <Text bold textColor='label' size='xxxl' gutters={{ bottom: 'md' }}>
           Wordle
-        </Text>
+        </Text> */}
         <Board board={board} size={wordLength} />
         <Row style={styles.actions} justify='space-between' guttersHorizontal='lg'>
           <IconButton iconName='help' onPress={() => setShowHelp(true)} />
@@ -172,5 +173,10 @@ const styles = StyleSheet.create({
   },
   actions: {
     width: '100%',
+  },
+  image: {
+    height: 75,
+    resizeMode: 'contain',
+    width: 250,
   },
 });
