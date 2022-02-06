@@ -1,5 +1,4 @@
-export type LetterStatus = 'available' | 'unset' | 'set' | 'success' | 'wrong';
-('failure');
+export type LetterStatus = 'available' | 'unset' | 'set' | 'success' | 'wrong' | 'failure';
 
 export interface Cell {
   letter: string;
