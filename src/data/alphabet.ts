@@ -1,9 +1,5 @@
 import { WordleKeyboard } from '../types';
 
-export const pick = (obj, ...args) => ({
-  ...args.reduce((res, key) => ({ ...res, [key]: obj[key] }), {}),
-});
-
 export const alphabet: WordleKeyboard = {
   q: 'available',
   w: 'available',

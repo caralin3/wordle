@@ -15,6 +15,7 @@ import {
   Text,
   Toast,
 } from '../components';
+import { fiveLetterWords } from '../data';
 import { RootState } from '../store';
 import * as gameState from '../store/game';
 import * as settingsState from '../store/settings';
@@ -68,8 +69,15 @@ export const GameScreen: React.FC = () => {
     }, 2000);
   };
 
+  const words = {
+    4: fiveLetterWords,
+    5: fiveLetterWords,
+    6: fiveLetterWords,
+    7: fiveLetterWords,
+  };
+
   const handleSubmit = () => {
-    if (isValidWord(currentGuess)) {
+    if (isValidWord(currentGuess, words[wordLength])) {
       const result = wordle(currentGuess, answer);
       dispatch(gameState.submitAttempt({ attempt: currentAttempt, result }));
       const correct = result.filter((letter) => letter.status === 'success');

@@ -1,4 +1,4 @@
-export const answers = [
+export const fiveLetterAnswers = [
   'aback',
   'abash',
   'abate',

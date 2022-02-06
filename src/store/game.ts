@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { alphabet } from '../data';
 import { Cell, WordleBoard, WordleKeyboard } from '../types';
-import { alphabet, MAX_ATTEMPTS } from '../utils';
+import { MAX_ATTEMPTS } from '../utils';
 
 export interface GameState {
   board: WordleBoard;

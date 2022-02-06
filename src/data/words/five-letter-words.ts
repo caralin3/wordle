@@ -1,4 +1,4 @@
-export const words = {
+export const fiveLetterWords = {
   aahed: true,
   aalii: true,
   aargh: true,

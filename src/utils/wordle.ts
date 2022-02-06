@@ -1,9 +1,8 @@
-import { words } from './words';
 import { Cell } from '../types';
 
 export const MAX_ATTEMPTS = 6;
 
-export function isValidWord(word: string) {
+export function isValidWord(word: string, words: { [key: string]: boolean }) {
   return word in words;
 }
 
