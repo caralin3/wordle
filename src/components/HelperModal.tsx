@@ -38,15 +38,15 @@ export const HelperModal: React.FC<HelperModalProps> = ({ onDismiss, visible }) 
             Examples:
           </Text>
           <Image source={example1Src} resizeMethod='resize' style={styles.image} />
-          <Text bold size='sm'>
+          <Text bold size='sm' gutters={{ top: 'md' }}>
             <Text bold textColor='primary'>
               "P"
             </Text>{' '}
             is in the word and in the correct spot.
           </Text>
-          <View style={styles.section}>
+          <View style={[styles.section, { borderColor: colors.border }]}>
             <Image source={example2Src} resizeMethod='resize' style={styles.image} />
-            <Text bold size='sm'>
+            <Text bold size='sm' gutters={{ top: 'md' }}>
               <Text bold textColor='primary'>
                 "S"
               </Text>{' '}
@@ -55,7 +55,7 @@ export const HelperModal: React.FC<HelperModalProps> = ({ onDismiss, visible }) 
           </View>
           <View style={[styles.section, { borderColor: colors.border }]}>
             <Image source={example3Src} resizeMethod='resize' style={styles.image} />
-            <Text bold size='sm'>
+            <Text bold size='sm' gutters={{ top: 'md' }}>
               <Text bold textColor='primary'>
                 "D"
               </Text>{' '}
