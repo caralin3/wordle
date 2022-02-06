@@ -1,9 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { alphabet } from '../data';
+import { alphabet, fiveLetterAnswers } from '../data';
 import { Cell, WordleBoard, WordleKeyboard } from '../types';
-import { MAX_ATTEMPTS } from '../utils';
+import { MAX_ATTEMPTS, shuffle } from '../utils';
+
+export const answersByLength = {
+  4: fiveLetterAnswers,
+  5: fiveLetterAnswers,
+  6: fiveLetterAnswers,
+  7: fiveLetterAnswers,
+};
 
 export interface GameState {
+  answers: string[];
+  answersIndex: number;
   board: WordleBoard;
   currentAttempt: number;
   currentGuess: string;
@@ -11,6 +20,8 @@ export interface GameState {
 }
 
 const initialState: GameState = {
+  answers: [],
+  answersIndex: 0,
   board: {},
   currentAttempt: 0,
   currentGuess: '',
@@ -21,6 +32,7 @@ export const GameSlice = createSlice({
   name: 'Game',
   initialState,
   reducers: {
+    resetGame: (state) => initialState,
     resetBoard: (state) => {
       const rows: WordleBoard = {};
       for (let i = 0; i < MAX_ATTEMPTS; i++) {
@@ -33,6 +45,16 @@ export const GameSlice = createSlice({
     },
     resetCurrentGuess: (state) => {
       state.currentGuess = '';
+    },
+    setAnswers: (state, action: PayloadAction<number>) => {
+      state.answers = shuffle(answersByLength[action.payload]);
+      state.answersIndex = 0;
+    },
+    resetAnswersIndex: (state, action: PayloadAction<number>) => {
+      state.answersIndex = action.payload;
+    },
+    incrementAnswersIndex: (state) => {
+      state.answersIndex++;
     },
     addLetter: (state, action: PayloadAction<string>) => {
       state.currentGuess += action.payload;
@@ -87,7 +109,17 @@ export const GameSlice = createSlice({
   },
 });
 
-export const { resetBoard, addLetter, resetCurrentGuess, removeLetter, incrementAttempt, submitAttempt } =
-  GameSlice.actions;
+export const {
+  addLetter,
+  incrementAnswersIndex,
+  incrementAttempt,
+  resetAnswersIndex,
+  resetBoard,
+  resetCurrentGuess,
+  resetGame,
+  removeLetter,
+  setAnswers,
+  submitAttempt,
+} = GameSlice.actions;
 
 export default GameSlice.reducer;

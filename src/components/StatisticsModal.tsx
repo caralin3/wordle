@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Button, useTheme } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import { GutterSizes, TextSizes } from '../appearance';
 import { GuessStats, Stats } from '../types';
 import { BarChart } from './BarChart';
@@ -17,7 +17,6 @@ export interface StatisticsModalProps {
 }
 
 export const StatisticsModal: React.FC<StatisticsModalProps> = ({ guesses, onDismiss, onNewGame, stats, visible }) => {
-  const { colors } = useTheme();
   const labels = {
     played: 'Played',
     win: 'Win %',
@@ -41,11 +40,9 @@ export const StatisticsModal: React.FC<StatisticsModalProps> = ({ guesses, onDis
             </Col>
           ))}
         </Row>
-        {guesses.filter((guess) => guess.value > 0).length > 0 && (
-          <View style={styles.chart}>
-            <BarChart guesses={guesses} />
-          </View>
-        )}
+        <View style={styles.chart}>
+          <BarChart guesses={guesses} />
+        </View>
         <Button labelStyle={{ fontSize: TextSizes.md }} onPress={onNewGame}>
           New Game
         </Button>

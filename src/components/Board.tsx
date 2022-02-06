@@ -34,7 +34,7 @@ export const BoardRow: React.FC<BoardRowProps> = ({ letters, size = 5 }) => {
     <Row guttersHorizontal='lg'>
       {cells.map((cell, index) => (
         <Col flex={1} gutters={gutters[size]} key={index}>
-          <LetterCard letter={cell.letter} status={cell.status} size={size === 7 ? 'md' : undefined} />
+          <LetterCard letter={cell.letter} status={cell.status} size={size === 7 ? 'lg' : undefined} />
         </Col>
       ))}
     </Row>

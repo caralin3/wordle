@@ -11,8 +11,13 @@ export interface ToastProps {
   visible: boolean;
 }
 
-export const Toast: React.FC<ToastProps> = ({ onDismiss, message, type = 'error', visible }) => {
+export const Toast: React.FC<ToastProps> = ({ onDismiss, message, type = 'success', visible }) => {
   const { colors, roundness } = useTheme();
+
+  let backgroundColor = colors.black;
+  if (type === 'error') {
+    backgroundColor = colors.red;
+  }
 
   return (
     <Portal
@@ -28,7 +33,7 @@ export const Toast: React.FC<ToastProps> = ({ onDismiss, message, type = 'error'
         contentContainerStyle={[
           styles.containerStyle,
           {
-            backgroundColor: type === 'error' ? colors.red : colors.success.background,
+            backgroundColor,
             borderRadius: roundness,
           },
         ]}

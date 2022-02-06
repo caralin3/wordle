@@ -1,11 +1,11 @@
 export const lightColors = {
   available: {
-    background: '#8F8F8F',
+    background: '#828181',
     text: '#fff',
   },
   black: '#000',
   border: '#eee',
-  gray: '#8F8F8F',
+  gray: '#828181',
   failure: {
     background: '#393b3a',
     text: '#fff',

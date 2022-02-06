@@ -17,7 +17,7 @@ export const Card: React.FC<LetterCardProps> = ({ letter, size, status }) => {
   const { darkMode } = React.useContext(PreferencesContext);
   const colorTheme = getColorStatus(darkMode);
   return (
-    <RNPCard style={[styles.container, colorTheme[status]]} elevation={3}>
+    <RNPCard style={[styles.letter, colorTheme[status]]} elevation={3}>
       <RNPCard.Content>
         {letter === '' ? (
           <Text bold size='lg' style={StyleSheet.flatten([styles.text, { opacity: 0 }])}>
@@ -26,7 +26,7 @@ export const Card: React.FC<LetterCardProps> = ({ letter, size, status }) => {
         ) : (
           <Text
             bold
-            size={size ? size : 'xl'}
+            size={size ? size : 'xxl'}
             style={StyleSheet.flatten([styles.text, { color: colorTheme[status].color }])}
           >
             {letter.toUpperCase()}
@@ -45,7 +45,7 @@ export const LetterCard: React.FC<LetterCardProps> = (props) => {
   // }, [props.status]);
 
   return (
-    <View>
+    <View style={{ width: '100%' }}>
       <Animated.View style={[styles.flip, flipAnim.frontAnimatedStyle]}>
         <Card {...props} />
       </Animated.View>
@@ -58,6 +58,9 @@ export const LetterCard: React.FC<LetterCardProps> = (props) => {
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%',
+  },
+  letter: {
     alignItems: 'center',
     borderWidth: 1,
     width: '100%',

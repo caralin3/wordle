@@ -7,10 +7,15 @@ import { darkTheme, defaultTheme } from './src/appearance';
 import { PreferencesContext } from './src/context';
 import { GameScreen } from './src/screens';
 import { store } from './src/store';
+import * as gameState from './src/store/game';
 
 export default function App() {
   const persistor = persistStore(store);
   const [darkMode, setDarkMode] = React.useState(false);
+
+  React.useEffect(() => {
+    store.dispatch(gameState.setAnswers(store.getState().settings.wordLength));
+  }, []);
 
   let theme = darkMode ? darkTheme : defaultTheme;
 

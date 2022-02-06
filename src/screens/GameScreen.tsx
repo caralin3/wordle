@@ -28,13 +28,15 @@ export const GameScreen: React.FC = () => {
 
   const board = useSelector((state: RootState) => state.game.board);
   const keyboard = useSelector((state: RootState) => state.game.keyboard);
+  const answers = useSelector((state: RootState) => state.game.answers);
   const currentAttempt = useSelector((state: RootState) => state.game.currentAttempt);
   const currentGuess = useSelector((state: RootState) => state.game.currentGuess);
-  const darkMode = useSelector((state: RootState) => state.settings.darkMode);
+  const answersIndex = useSelector((state: RootState) => state.game.answersIndex);
   const wordLength = useSelector((state: RootState) => state.settings.wordLength);
   const stats = useSelector((state: RootState) => state.statistics.stats);
   const guesses = useSelector((state: RootState) => state.statistics.guesses);
 
+  const [answer, setAnswer] = React.useState('');
   const [showNotFound, setShowNotFound] = React.useState(false);
   const [showSuccess, setShowSuccess] = React.useState(false);
   const [showFailure, setShowFailure] = React.useState(false);
@@ -43,12 +45,14 @@ export const GameScreen: React.FC = () => {
   const [showStatistics, setShowStatistics] = React.useState(false);
 
   // React.useEffect(() => {
-  //   dispatch(gameState.resetBoard());
-  //   dispatch(settingsState.setWordLength(5));
+  //   dispatch(gameState.resetGame());
   //   dispatch(statisticsState.resetStatistics());
   // }, []);
 
-  const answer = 'rusty';
+  React.useEffect(() => {
+    dispatch(gameState.setAnswers(wordLength));
+    setAnswer(answers[answersIndex]);
+  }, []);
 
   const handleSuccess = () => {
     setShowSuccess(true);
@@ -96,9 +100,18 @@ export const GameScreen: React.FC = () => {
     }
   };
 
+  const updateWordLength = (val: string) => {
+    dispatch(settingsState.setWordLength(Number(val)));
+    dispatch(gameState.setAnswers(Number(val)));
+    dispatch(gameState.resetBoard());
+    setAnswer(answers[0]);
+  };
+
   const handleNewGame = () => {
     setShowStatistics(false);
     dispatch(gameState.resetBoard());
+    dispatch(gameState.incrementAnswersIndex());
+    setAnswer(answers[answersIndex + 1]);
   };
 
   return (
@@ -123,7 +136,7 @@ export const GameScreen: React.FC = () => {
         <SettingsModal
           visible={showSettings}
           onDismiss={() => setShowSettings(false)}
-          onSetWordLength={(val) => dispatch(settingsState.setWordLength(Number(val)))}
+          onSetWordLength={updateWordLength}
           openSettings={() => setShowHelp(true)}
           openStatistics={() => setShowStatistics(true)}
           wordLength={(wordLength || 5).toString()}
@@ -135,13 +148,13 @@ export const GameScreen: React.FC = () => {
           onDismiss={() => setShowStatistics(false)}
           onNewGame={handleNewGame}
         />
-        <Toast visible={showFailure} onDismiss={() => setShowFailure(false)} message={answer.toUpperCase()} />
         <Toast
-          visible={showSuccess}
-          onDismiss={() => setShowSuccess(false)}
-          message='You Got It Right!'
-          type='success'
+          visible={showFailure}
+          onDismiss={() => setShowFailure(false)}
+          message={answer.toUpperCase()}
+          type='error'
         />
+        <Toast visible={showSuccess} onDismiss={() => setShowSuccess(false)} message='Correct!' />
         <Toast visible={showNotFound} onDismiss={() => setShowNotFound(false)} message='Word Not Valid' />
       </View>
     </SafeAreaView>
