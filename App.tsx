@@ -1,35 +1,55 @@
+import AppLoading from 'expo-app-loading';
+import { Asset } from 'expo-asset';
 import * as SplashScreen from 'expo-splash-screen';
 import React from 'react';
-import { View } from 'react-native';
+import { Image, View } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import { darkTheme, defaultTheme } from './src/appearance';
 import { PreferencesContext } from './src/context';
-import { GameScreen } from './src/screens';
+import { SplashLoadingScreen, GameScreen } from './src/screens';
 import { store } from './src/store';
 import * as gameState from './src/store/game';
+
+function cacheImages(images) {
+  return images.map((image) => {
+    if (typeof image === 'string') {
+      return Image.prefetch(image);
+    } else {
+      return Asset.fromModule(image).downloadAsync();
+    }
+  });
+}
 
 export default function App() {
   const persistor = persistStore(store);
   const [appIsReady, setAppIsReady] = React.useState(false);
   const [darkMode, setDarkMode] = React.useState(false);
 
-  React.useEffect(() => {
-    async function prepare() {
-      try {
-        await SplashScreen.preventAutoHideAsync();
-        await store.dispatch(gameState.setAnswers(store.getState().settings.wordLength));
-      } catch (e) {
-        console.warn(e);
-      } finally {
-        setAppIsReady(true);
-      }
-    }
+  async function loadAssetsAsync() {
+    const imageAssets = cacheImages([
+      require('./src/appearance/images/correct-example.png'),
+      require('./src/appearance/images/failure-example.png'),
+      require('./src/appearance/images/wordle.png'),
+      require('./src/appearance/images/wrong-example.png'),
+    ]);
 
-    prepare();
-  }, []);
+    await Promise.all([...imageAssets]);
+  }
+
+  async function startAsync() {
+    try {
+      await SplashScreen.preventAutoHideAsync();
+      await loadAssetsAsync();
+      await store.dispatch(gameState.setAnswers(store.getState().settings.wordLength));
+    } catch (e) {
+      console.warn(e);
+    } finally {
+      setAppIsReady(true);
+    }
+  }
 
   const onLayoutRootView = React.useCallback(async () => {
     if (appIsReady) {
@@ -52,12 +72,12 @@ export default function App() {
   );
 
   if (!appIsReady) {
-    return null;
+    return <AppLoading startAsync={startAsync} onFinish={() => setAppIsReady(true)} onError={console.warn} />;
   }
 
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={<SplashLoadingScreen />} persistor={persistor}>
         <PreferencesContext.Provider value={preferences}>
           <PaperProvider theme={theme}>
             <View style={{ flex: 1 }} onLayout={onLayoutRootView}>

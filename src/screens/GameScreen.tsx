@@ -118,9 +118,6 @@ export const GameScreen: React.FC = () => {
     <SafeAreaView style={styles.safeArea}>
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         <Image source={require('../appearance/images/wordle.png')} resizeMethod='resize' style={styles.image} />
-        {/* <Text bold textColor='label' size='xxxl' gutters={{ bottom: 'md' }}>
-          Wordle
-        </Text> */}
         <Board board={board} size={wordLength} />
         <Row style={styles.actions} justify='space-between' guttersHorizontal='lg'>
           <IconButton iconName='help' onPress={() => setShowHelp(true)} />

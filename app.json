@@ -4,19 +4,20 @@
     "slug": "wordle",
     "primaryColor": "#393b3a",
     "icon": "./src/appearance/icons/icon.png",
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./src/appearance/icons/adaptive-icon.png",
-        "backgroundColor": "#393b3a"
-      },
-      "package": "com.steinberg.wordle"
-    },
+    "orientation": "portrait",
+    "assetBundlePatterns": ["./src/appearance/images/*", "./src/appearance/icons/*"],
     "splash": {
       "image": "./src/appearance/icons/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "orientation": "portrait",
+    "android": {
+      "package": "com.steinberg.wordle",
+      "adaptiveIcon": {
+        "foregroundImage": "./src/appearance/icons/adaptive-icon.png",
+        "backgroundColor": "#393b3a"
+      }
+    },
     "ios": {
       "bundleIdentifier": "com.steinberg.wordle"
     }
