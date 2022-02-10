@@ -1,7 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
-import counterReducer from './counter';
 import gameReducer from './game';
 import settingsReducer from './settings';
 import statisticsReducer from './statistics';
@@ -12,7 +11,6 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  counter: counterReducer,
   game: gameReducer,
   settings: settingsReducer,
   statistics: statisticsReducer,

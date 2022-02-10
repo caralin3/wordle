@@ -1,7 +1,6 @@
 export * from './BarChart';
 export * from './Button';
 export * from './Board';
-export * from './Counter';
 export * from './Grid';
 export * from './HelperModal';
 export * from './IconButton';
