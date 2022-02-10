@@ -1,3 +1,4 @@
+import * as Constants from 'expo-constants';
 import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
@@ -12,7 +13,7 @@ export const SplashLoadingScreen: React.FC = () => (
     <View style={styles.version}>
       <ActivityIndicator animating={true} color={lightColors.success.background} />
       <Text gutters={{ top: 'md' }} size='sm'>
-        Version 1.0.0
+        Version {Constants.default.manifest.version}
       </Text>
     </View>
   </View>

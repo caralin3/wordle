@@ -1,4 +1,5 @@
 import getColor from 'color';
+import * as Constants from 'expo-constants';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Switch, TouchableRipple, useTheme } from 'react-native-paper';
@@ -95,6 +96,16 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               Statistics
             </Text>
           </TouchableRipple>
+        </Row>
+        <Row align='center' justify='center' style={StyleSheet.flatten([styles.row, { borderColor: colors.border }])}>
+          <Text bold align='center' size='xs' gutters={{ top: 'lg' }}>
+            Wordle © {new Date().getFullYear()}
+          </Text>
+        </Row>
+        <Row justify='center'>
+          <Text italic align='center' size='xs'>
+            Version {Constants.default.manifest.version}
+          </Text>
         </Row>
       </View>
     </Modal>

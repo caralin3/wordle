@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "Wordle",
+    "version": "1.0.0",
     "slug": "wordle",
     "primaryColor": "#393b3a",
     "icon": "./src/appearance/icons/icon.png",

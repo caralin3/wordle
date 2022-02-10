@@ -2,7 +2,7 @@ import AppLoading from 'expo-app-loading';
 import { Asset } from 'expo-asset';
 import * as SplashScreen from 'expo-splash-screen';
 import React from 'react';
-import { Image, View } from 'react-native';
+import { Image, SafeAreaView } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
@@ -80,9 +80,9 @@ export default function App() {
       <PersistGate loading={<SplashLoadingScreen />} persistor={persistor}>
         <PreferencesContext.Provider value={preferences}>
           <PaperProvider theme={theme}>
-            <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+            <SafeAreaView style={{ flex: 1 }} onLayout={onLayoutRootView}>
               <GameScreen />
-            </View>
+            </SafeAreaView>
           </PaperProvider>
         </PreferencesContext.Provider>
       </PersistGate>

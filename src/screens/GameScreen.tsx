@@ -1,7 +1,6 @@
 import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Board,
@@ -12,7 +11,6 @@ import {
   Row,
   SettingsModal,
   StatisticsModal,
-  Text,
   Toast,
 } from '../components';
 import { fiveLetterWords } from '../data';
@@ -115,54 +113,49 @@ export const GameScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={[styles.container, { backgroundColor: colors.background }]}>
-        <Image source={require('../appearance/images/wordle.png')} resizeMethod='resize' style={styles.image} />
-        <Board board={board} size={wordLength} />
-        <Row style={styles.actions} justify='space-between' guttersHorizontal='lg'>
-          <IconButton iconName='help' onPress={() => setShowHelp(true)} />
-          <Button title='submit' disabled={currentGuess.length !== wordLength} onPress={handleSubmit} />
-          <IconButton iconName='cog' onPress={() => setShowSettings(true)} />
-        </Row>
-        <Keyboard
-          keyboard={keyboard}
-          disabled={currentGuess.length === wordLength}
-          onBackspace={() => dispatch(gameState.removeLetter())}
-          onPress={(letter) => dispatch(gameState.addLetter(letter))}
-        />
-        <HelperModal visible={showHelp} onDismiss={() => setShowHelp(false)} />
-        <SettingsModal
-          visible={showSettings}
-          onDismiss={() => setShowSettings(false)}
-          onSetWordLength={updateWordLength}
-          openSettings={() => setShowHelp(true)}
-          openStatistics={() => setShowStatistics(true)}
-          wordLength={(wordLength || 5).toString()}
-        />
-        <StatisticsModal
-          stats={stats}
-          guesses={guesses}
-          visible={showStatistics}
-          onDismiss={() => setShowStatistics(false)}
-          onNewGame={handleNewGame}
-        />
-        <Toast
-          visible={showFailure}
-          onDismiss={() => setShowFailure(false)}
-          message={answer.toUpperCase()}
-          type='error'
-        />
-        <Toast visible={showSuccess} onDismiss={() => setShowSuccess(false)} message='Correct!' />
-        <Toast visible={showNotFound} onDismiss={() => setShowNotFound(false)} message='Word Not Valid' />
-      </View>
-    </SafeAreaView>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <Image source={require('../appearance/images/wordle.png')} resizeMethod='resize' style={styles.image} />
+      <Board board={board} size={wordLength} />
+      <Row style={styles.actions} justify='space-between' guttersHorizontal='lg'>
+        <IconButton iconName='help' onPress={() => setShowHelp(true)} />
+        <Button title='submit' disabled={currentGuess.length !== wordLength} onPress={handleSubmit} />
+        <IconButton iconName='cog' onPress={() => setShowSettings(true)} />
+      </Row>
+      <Keyboard
+        keyboard={keyboard}
+        disabled={currentGuess.length === wordLength}
+        onBackspace={() => dispatch(gameState.removeLetter())}
+        onPress={(letter) => dispatch(gameState.addLetter(letter))}
+      />
+      <HelperModal visible={showHelp} onDismiss={() => setShowHelp(false)} />
+      <SettingsModal
+        visible={showSettings}
+        onDismiss={() => setShowSettings(false)}
+        onSetWordLength={updateWordLength}
+        openSettings={() => setShowHelp(true)}
+        openStatistics={() => setShowStatistics(true)}
+        wordLength={(wordLength || 5).toString()}
+      />
+      <StatisticsModal
+        stats={stats}
+        guesses={guesses}
+        visible={showStatistics}
+        onDismiss={() => setShowStatistics(false)}
+        onNewGame={handleNewGame}
+      />
+      <Toast
+        visible={showFailure}
+        onDismiss={() => setShowFailure(false)}
+        message={answer.toUpperCase()}
+        type='error'
+      />
+      <Toast visible={showSuccess} onDismiss={() => setShowSuccess(false)} message='Correct!' />
+      <Toast visible={showNotFound} onDismiss={() => setShowNotFound(false)} message='Word Not Valid' />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-  },
   container: {
     alignItems: 'center',
     flex: 1,
