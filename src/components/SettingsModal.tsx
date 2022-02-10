@@ -51,14 +51,14 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   return (
     <Modal title='Settings' visible={visible} onDismiss={onDismiss}>
       <View style={{ flex: 1 }}>
-        <Row>
+        {/* <Row>
           <Text bold textColor='label'>
             Letters in Word
           </Text>
         </Row>
         <Row guttersVertical='md'>
           <ToggleGroup toggleBtns={wordLengths} onValueChange={onSetWordLength} value={wordLength} />
-        </Row>
+        </Row> */}
         <Row
           style={StyleSheet.flatten([styles.row, { borderColor: colors.border }])}
           align='center'

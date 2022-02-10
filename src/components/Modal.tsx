@@ -17,7 +17,12 @@ export const Modal: React.FC<ModalProps> = ({ children, dismissable, onDismiss, 
   return (
     <Portal>
       <RNPModal
-        contentContainerStyle={{ backgroundColor: darkMode ? colors.black : colors.white, borderRadius: roundness }}
+        contentContainerStyle={{
+          backgroundColor: darkMode ? colors.black : colors.white,
+          borderColor: darkMode ? colors.white : undefined,
+          borderRadius: roundness,
+          borderWidth: darkMode ? 1 : undefined,
+        }}
         dismissable={dismissable}
         onDismiss={onDismiss}
         visible={visible}
